@@ -1,6 +1,74 @@
 'use strict';
 
 angular.module('myApp').controller('UserController', ['$scope', '$log', 'UserService', function($scope, $log, UserService) {
+
+    var userList = [
+            {
+                firstName: 'George',
+                lastName: 'Okez',
+                email: 'georgeokez@gmail.com',
+                age: 30
+            },
+            {
+                firstName: 'Tobi',
+                lastName: 'Abram',
+                email: 'tobiabram@gmail.com',
+                age: 28
+            },
+            {
+                firstName: 'Damola',
+                lastName: 'Asiyanbola',
+                email: 'andrewdamz@gmail.com',
+                age: 26
+            }
+        ];
+
+    $scope.user = {};
+
+    $scope.users = [];
+
+    function fetchAllUsers (){
+        $scope.users = userList;
+    }
+
+    function getUser(index){
+
+    }
+
+    $scope.addUser = function (user) {
+        $scope.users.push(user);
+        $scope.user = {};
+    }
+
+    $scope.editUser = function(index){
+        $scope.user = $scope.users[index];
+    }
+
+    function updateUser (index, user) {
+        $scope.users.splice(index, 1, user);
+    }
+
+    $scope.deleteUser = function (index) {
+        $scope.users.splice(index, 1);
+    }
+
+    function delelteAllUsers() {
+        $scope.users = [];
+    }
+
+    function init() {
+        fetchAllUsers();
+    }
+
+    init();
+
+
+
+}]);
+
+/*
+angular.module('myApp').controller('UserController', ['$scope', '$log', 'UserService', function($scope, $log, UserService) {
+
     var self = this;
     self.user={id:null,firstname:'',lastname:'',email:'',age:null};
     self.users=[];
@@ -115,3 +183,5 @@ angular.module('myApp').controller('UserController', ['$scope', '$log', 'UserSer
     }
 
 }]);
+
+*/
