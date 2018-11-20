@@ -7,6 +7,8 @@ import org.springframework.stereotype.Component;
 
 /**
  * Created by George on 20/11/2018
+ *
+ * Class helps bootstrap 3 users upon startup
  */
 
 @Component
