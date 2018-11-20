@@ -5,28 +5,28 @@ angular.module('myApp').controller('MockUserController', ['$scope', '$log', 'Use
     var userList = [
         {
             id : 1,
-            firstName: 'George',
-            lastName: 'Okez',
+            firstname: 'George',
+            lastname: 'Okez',
             email: 'georgeokez@gmail.com',
             age: 30
         },
         {
             id : 2,
-            firstName: 'Tobi',
-            lastName: 'Abram',
+            firstname: 'Tobi',
+            lastname: 'Abram',
             email: 'tobiabram@gmail.com',
             age: 28
         },
         {
             id : 3,
-            firstName: 'Damola',
-            lastName: 'Asiyanbola',
+            firstname: 'Damola',
+            lastname: 'Asiyanbola',
             email: 'andrewdamz@gmail.com',
             age: 26
         }
     ];
 
-    $scope.user = {id:null, firstName:'', lastName:'', email:'', age:null};
+    $scope.user = {id:null, firstname:'', lastname:'', email:'', age:null};
     $scope.users = [];
     $scope.toggleBtn = false;
 
@@ -54,14 +54,14 @@ angular.module('myApp').controller('MockUserController', ['$scope', '$log', 'Use
     $scope.editUser = function(index){
 
         var id = userList[index].id;
-        var firstName = userList[index].firstName;
-        var lastName = userList[index].lastName;
+        var firstname = userList[index].firstname;
+        var lastname = userList[index].lastname;
         var email = userList[index].email;
         var age  = userList[index].age;
 
         $scope.user.id = id;
-        $scope.user.firstName = firstName;
-        $scope.user.lastName = lastName;
+        $scope.user.firstname = firstname;
+        $scope.user.lastname = lastname;
         $scope.user.email = email;
         $scope.user.age = age;
 
@@ -88,7 +88,7 @@ angular.module('myApp').controller('MockUserController', ['$scope', '$log', 'Use
     }
 
     function resetUser(){
-        $scope.user = {id:null, firstName:'', lastName:'', email:'', age:null};
+        $scope.user = {id:null, firstname:'', lastname:'', email:'', age:null};
     }
 
 

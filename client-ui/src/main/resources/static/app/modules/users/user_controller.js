@@ -2,33 +2,29 @@
 
 angular.module('myApp').controller('UserController', ['$scope', '$log', 'UserService', function($scope, $log, UserService) {
 
-    var userList = [
-            {
-                firstName: 'George',
-                lastName: 'Okez',
-                email: 'georgeokez@gmail.com',
-                age: 30
-            },
-            {
-                firstName: 'Tobi',
-                lastName: 'Abram',
-                email: 'tobiabram@gmail.com',
-                age: 28
-            },
-            {
-                firstName: 'Damola',
-                lastName: 'Asiyanbola',
-                email: 'andrewdamz@gmail.com',
-                age: 26
-            }
-        ];
-
-    $scope.user = {};
-
+    var userList = [];
+    $scope.user = {id:null, firstname:'', lastname:'', email:'', age:null};
     $scope.users = [];
+    $scope.toggleBtn = false;
+
+    init();
+
+    function init() {
+        fetchAllUsers();
+    }
 
     function fetchAllUsers (){
-        $scope.users = userList;
+
+        UserService.fetchAllUsers()
+            .then(
+                function(data) {
+                    userList = data;
+                    $scope.users = userList;
+                },
+                function(errResponse){
+                    console.error('Error while fetching Users');
+                }
+            );
     }
 
     function getUser(index){
@@ -36,31 +32,71 @@ angular.module('myApp').controller('UserController', ['$scope', '$log', 'UserSer
     }
 
     $scope.addUser = function (user) {
-        $scope.users.push(user);
-        $scope.user = {};
+
+        UserService.createUser(user)
+            .then(
+                function (){
+                    resetUser();
+                    fetchAllUsers();
+                },
+                function(errResponse){
+                    console.error('Error while creating User');
+                }
+            );
     }
 
     $scope.editUser = function(index){
-        $scope.user = $scope.users[index];
+
+        var id = userList[index].id;
+        var firstname = userList[index].firstname;
+        var lastname = userList[index].lastname;
+        var email = userList[index].email;
+        var age  = userList[index].age;
+
+        $scope.user.id = id;
+        $scope.user.firstname = firstname;
+        $scope.user.lastname = lastname;
+        $scope.user.email = email;
+        $scope.user.age = age;
+
+        $scope.toggleBtn = true;
+
     }
 
-    function updateUser (index, user) {
-        $scope.users.splice(index, 1, user);
+    $scope.updateUser = function (user) {
+        UserService.updateUser(user, user.id)
+            .then(
+                function (){
+                    resetUser();
+                    $scope.toggleBtn = false;
+                    fetchAllUsers();
+                },
+                function(errResponse){
+                    console.error('Error while updating User');
+                }
+            );
     }
 
     $scope.deleteUser = function (index) {
-        $scope.users.splice(index, 1);
+        UserService.deleteUser(index)
+            .then(
+                function (){
+                    fetchAllUsers();
+                },
+                function(errResponse){
+                    console.error('Error while deleting User');
+                }
+            );
     }
 
     function delelteAllUsers() {
-        $scope.users = [];
-    }
-
-    function init() {
+        userList = [];
         fetchAllUsers();
     }
 
-    init();
+    function resetUser(){
+        $scope.user = {id:null, firstname:'', lastname:'', email:'', age:null};
+    }
 
 
 
